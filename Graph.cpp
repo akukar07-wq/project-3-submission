@@ -95,6 +95,7 @@ void Graph::updateNode(int id, NodeInfo n) {
         cout << "Attempting to update node with id: " << id << " but node does not exist" << endl;
         return;
     }
+    if (nodes[id] != nullptr){delete nodes[id];}
     NodeInfo* node = new NodeInfo(n);
     nodes[id] = node;
     return; //stub
@@ -116,8 +117,9 @@ void Graph::updateConnection(int v, int u, double w) {
         exit(1);
     }
     Connection& conn = adjacencyList[v][u];
+    conn.source = v;
+    conn.dest = u;
     conn.weight = w;
-
 }
 
 // STUDENT TODO: IMPLEMENT
