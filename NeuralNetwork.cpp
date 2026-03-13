@@ -63,10 +63,10 @@ vector<double> NeuralNetwork::predict(DataInstance instance) {
     // at each step of your traversal.
     for (int i = 0; i < inputNodeIds.size(); i++) {
         int nodeId = inputNodeIds[i];
-        input[i] = nodes[nodeId]->postActivationValue;
+        nodes[nodeId]->postActivationValue = input[i]; 
     }
     queue<int> q;
-    vector<bool> visited(input.size(), false);
+    vector<bool> visited(size, false);
     for (int i = 0; i < inputNodeIds.size(); i++) {
         q.push(inputNodeIds[i]);
         visited[inputNodeIds[i]] = true;
@@ -161,6 +161,7 @@ double NeuralNetwork::contribute(int nodeId, const double& y, const double& p) {
             incomingContribution = contribute(pair.first, y, p);
             visitContributeNeighbor(conn, incomingContribution, outgoingContribution);
         }
+        visitContributeNode(nodeId, outgoingContribution);
     }
 
     // Before returning, store outgoingContribution in the contributions map.
@@ -531,4 +532,6 @@ ostream& operator<<(ostream& out, const NeuralNetwork& nn) {
     out << static_cast<const Graph&>(nn) << endl;
     return out;
 }
+
+
 
