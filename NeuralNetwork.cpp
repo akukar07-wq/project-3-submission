@@ -161,7 +161,11 @@ double NeuralNetwork::contribute(int nodeId, const double& y, const double& p) {
             incomingContribution = contribute(pair.first, y, p);
             visitContributeNeighbor(conn, incomingContribution, outgoingContribution);
         }
-        visitContributeNode(nodeId, outgoingContribution);
+        bool isInput = find(inputNodeIds.begin(), inputNodeIds.end(), nodeId) != inputNodeIds.end();
+        if (!isInput) 
+        {
+            visitContributeNode(nodeId, outgoingContribution);
+        }
     }
 
     // Before returning, store outgoingContribution in the contributions map.
@@ -532,6 +536,4 @@ ostream& operator<<(ostream& out, const NeuralNetwork& nn) {
     out << static_cast<const Graph&>(nn) << endl;
     return out;
 }
-
-
 
